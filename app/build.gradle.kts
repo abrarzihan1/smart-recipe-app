@@ -39,9 +39,9 @@ dependencies {
     implementation(libs.room.runtime)
 
     annotationProcessor(libs.room.compiler)
-
-    implementation(libs.paging.runtime)
-    implementation(libs.paging.runtime.ktx)
+//
+//    implementation(libs.paging.runtime)
+//    implementation(libs.paging.runtime.ktx)
 
     implementation(libs.appcompat)
     implementation(libs.material)

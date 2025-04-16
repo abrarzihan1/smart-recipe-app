@@ -24,4 +24,11 @@ public interface RecipeApi {
             @Path("id") int id,
             @Query("apiKey") String apiKey
     );
+
+    @GET("recipes/findByIngredients")
+    Call<List<Recipe>> searchByIngredients(
+            @Query("ingredients") String ingredients,
+            @Query("number") int number,
+            @Query("apiKey") String apiKey
+    );
 }

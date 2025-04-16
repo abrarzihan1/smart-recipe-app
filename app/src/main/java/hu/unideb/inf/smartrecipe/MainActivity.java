@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import hu.unideb.inf.smartrecipe.activities.FavoritesActivity;
+import hu.unideb.inf.smartrecipe.activities.IngredientSearchActivity;
 import hu.unideb.inf.smartrecipe.activities.RecipeDetailActivity;
 import hu.unideb.inf.smartrecipe.adapter.FavoriteRecipeAdapter;
 import hu.unideb.inf.smartrecipe.adapter.RecipeAdapter;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     EditText ingredientInput;
     Button searchButton;
     Button favoritesButton;
+    Button openIngredientsButton;
     RecipeApi recipeApi;
     RecyclerView recyclerView;
     RecipeAdapter recipeAdapter;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         ingredientInput = findViewById(R.id.ingredientInput);
         searchButton = findViewById(R.id.searchButton);
         favoritesButton = findViewById(R.id.favoritesButton);
+        openIngredientsButton = findViewById(R.id.openIngredientsButton);
 
         recyclerView = findViewById(R.id.recipeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
         favoritesButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+        });
+
+        openIngredientsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, IngredientSearchActivity.class);
             startActivity(intent);
         });
     }

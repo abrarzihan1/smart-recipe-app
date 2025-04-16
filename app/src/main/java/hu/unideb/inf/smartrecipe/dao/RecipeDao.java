@@ -1,7 +1,6 @@
 package hu.unideb.inf.smartrecipe.dao;
 
 import androidx.lifecycle.LiveData;
-import androidx.paging.PagingSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -24,7 +23,4 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM favorite_recipes WHERE id = :id LIMIT 1")
     FavoriteRecipe getById(int id);
-
-    @Query("SELECT * FROM favorite_recipes ORDER BY id DESC")
-    PagingSource<Integer, FavoriteRecipe> pagingFavorites();
 }
