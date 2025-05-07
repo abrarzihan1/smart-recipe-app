@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Spoon -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M7,2a2,2 0 0,1 2,2c0,1.5 -2,4 -2,4s-2,-2.5 -2,-4a2,2 0 0,1 2,-2zm-1,7h2v11h-2z" />
+
+    <!-- Fork -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M16,2v5h-1V2h-1v5h-1V2h-1v6c0,0.55 0.45,1 1,1h1v11h2V9h1c0.55,0 1,-0.45 1,-1V2z" />
+</vector>
