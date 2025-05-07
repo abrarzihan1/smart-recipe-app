@@ -37,11 +37,11 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.github.glide)
     implementation(libs.room.runtime)
+    implementation(libs.material.v150)
+    implementation(libs.coordinatorlayout)
+    implementation(libs.cardview)
 
     annotationProcessor(libs.room.compiler)
-//
-//    implementation(libs.paging.runtime)
-//    implementation(libs.paging.runtime.ktx)
 
     implementation(libs.appcompat)
     implementation(libs.material)
