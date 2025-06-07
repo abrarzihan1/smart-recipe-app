@@ -25,6 +25,7 @@ public class FavoriteRecipeAdapter extends RecyclerView.Adapter<FavoriteRecipeAd
     private List<FavoriteRecipe> favorites = new ArrayList<>();
     private RecipeDao recipeDao;
     private final OnDeleteClickListener deleteClickListener;
+    private final OnRecipeClickListener recipeClickListener;
 
     public FavoriteRecipe getRecipeAt(int position) {
         return favorites.get(position);
@@ -34,8 +35,14 @@ public class FavoriteRecipeAdapter extends RecyclerView.Adapter<FavoriteRecipeAd
         void OnDeleteClick(FavoriteRecipe recipe);
     }
 
-    public FavoriteRecipeAdapter(OnDeleteClickListener listener) {
-        this.deleteClickListener = listener;
+    public interface OnRecipeClickListener {
+        void onRecipeClick(FavoriteRecipe recipe);
+    }
+
+    // Updated constructor to accept both listeners
+    public FavoriteRecipeAdapter(OnRecipeClickListener recipeClickListener, OnDeleteClickListener deleteClickListener) {
+        this.recipeClickListener = recipeClickListener;
+        this.deleteClickListener = deleteClickListener;
     }
 
     @NonNull
@@ -55,6 +62,14 @@ public class FavoriteRecipeAdapter extends RecyclerView.Adapter<FavoriteRecipeAd
                 .load(recipe.getImage())
                 .into(holder.image);
 
+        // Set click listener for the entire item to open recipe details
+        holder.itemView.setOnClickListener(v -> {
+            if (recipeClickListener != null) {
+                recipeClickListener.onRecipeClick(recipe);
+            }
+        });
+
+        // Set click listener for delete icon
         holder.deleteIcon.setOnClickListener(v -> {
             new AlertDialog.Builder(holder.itemView.getContext())
                     .setTitle("Remove Recipe")

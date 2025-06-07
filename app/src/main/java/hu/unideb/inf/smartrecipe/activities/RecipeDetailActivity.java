@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
+import hu.unideb.inf.smartrecipe.BuildConfig;
 import hu.unideb.inf.smartrecipe.R;
 import hu.unideb.inf.smartrecipe.api.RecipeApi;
 import hu.unideb.inf.smartrecipe.database.RecipeDatabase;
@@ -37,7 +38,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Button saveFavoriteBtn;
     private RecipeDatabase recipeDatabase;
     RecipeApi recipeApi;
-    String apiKey = "6e46921f7d51428e912f8c4e4f7f0bb7";
+    String apiKey = BuildConfig.API_KEY;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

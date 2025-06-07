@@ -1,6 +1,11 @@
 package hu.unideb.inf.smartrecipe.model;
 
-public class Recipe {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Recipe implements Parcelable {
     private int id;
     private String title;
     private String image;
@@ -15,5 +20,15 @@ public class Recipe {
 
     public String getImage() {
         return image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
     }
 }

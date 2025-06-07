@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import hu.unideb.inf.smartrecipe.BuildConfig;
 import hu.unideb.inf.smartrecipe.R;
 import hu.unideb.inf.smartrecipe.activities.RecipeDetailActivity;
 import hu.unideb.inf.smartrecipe.adapter.RecipeAdapter;
@@ -51,8 +52,9 @@ public class IngredientSearchFragment extends Fragment {
     TextView recipesTitle, emptyStateTextView;
     List<String> ingredients = new ArrayList<>();
     RecipeApi recipeApi;
+    private List<String> ingredientsList;
 
-    String API_KEY = "6e46921f7d51428e912f8c4e4f7f0bb7"; // Replace with your real API key
+    String API_KEY = BuildConfig.API_KEY;
 
     @Nullable
     @Override
@@ -110,8 +112,21 @@ public class IngredientSearchFragment extends Fragment {
             searchByIngredients(ingredientString);
         });
 
+        // Get ingredients from GroceryFragment
+        Bundle args = getArguments();
+        if (args != null) {
+            ingredientsList = args.getStringArrayList("ingredientsList");
+        }
+
+        // Example: use it in an API request
+        if (ingredientsList != null && !ingredientsList.isEmpty()) {
+            String ingredientsParam = TextUtils.join(",", ingredientsList); // comma-separated
+            searchByIngredients(ingredientsParam);
+        }
+
         return view;
     }
+
 
     private void addIngredient() {
         String ingredient = ingredientInput.getText().toString().trim();

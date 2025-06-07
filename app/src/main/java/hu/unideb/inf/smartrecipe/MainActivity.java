@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import hu.unideb.inf.smartrecipe.fragment.FavoritesFragment;
+import hu.unideb.inf.smartrecipe.fragment.GroceryFragment;
 import hu.unideb.inf.smartrecipe.fragment.IngredientSearchFragment;
 import hu.unideb.inf.smartrecipe.fragment.SearchFragment;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_favorites) {
                 fragment = new FavoritesFragment();
             } else if (itemId == R.id.nav_grocery) {
-                // fragment = new GroceryFragment();
+                fragment = new GroceryFragment();
             }
 
             if (fragment != null) {

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favoritesLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/favoritesTitle"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp"
-        android:text="Your Favorite Recipes"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="#673AB7"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Favorite Recipes"
+        app:titleTextColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoritesRecyclerView"
@@ -23,5 +24,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="8dp"/>
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp" />
 </LinearLayout>

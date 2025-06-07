@@ -1,6 +1,15 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+val apiKey: String = localProperties.getProperty("API_KEY") ?: ""
 
 android {
     namespace = "hu.unideb.inf.smartrecipe"
@@ -14,6 +23,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

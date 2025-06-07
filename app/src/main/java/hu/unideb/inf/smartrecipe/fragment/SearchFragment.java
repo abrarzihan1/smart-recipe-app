@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import hu.unideb.inf.smartrecipe.BuildConfig;
 import hu.unideb.inf.smartrecipe.R;
-import hu.unideb.inf.smartrecipe.activities.FavoritesActivity;
-import hu.unideb.inf.smartrecipe.activities.IngredientSearchActivity;
 import hu.unideb.inf.smartrecipe.activities.RecipeDetailActivity;
 import hu.unideb.inf.smartrecipe.adapter.RecipeAdapter;
 import hu.unideb.inf.smartrecipe.api.RecipeApi;
@@ -34,13 +33,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchFragment extends Fragment {
 
+    private static final String KEY_RECIPES = "recipes";
+    private static final String KEY_SEARCH_QUERY = "search_query";
+
     EditText ingredientInput;
     Button searchButton;
     RecyclerView recyclerView;
     RecipeAdapter recipeAdapter;
     RecipeApi recipeApi;
 
-    String apiKey = "6e46921f7d51428e912f8c4e4f7f0bb7"; // Replace with your real API key
+    String apiKey = BuildConfig.API_KEY;
+    private ArrayList<Recipe> savedRecipes;
+    private String savedSearchQuery;
 
     @Nullable
     @Override
@@ -48,7 +52,6 @@ public class SearchFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         ingredientInput = view.findViewById(R.id.ingredientInput);
@@ -56,7 +59,9 @@ public class SearchFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recipeRecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recipeAdapter = new RecipeAdapter(getContext(), new ArrayList<>(), recipe -> {
+
+        List<Recipe> initialRecipes = savedRecipes != null ? savedRecipes : new ArrayList<>();
+        recipeAdapter = new RecipeAdapter(getContext(), new ArrayList<>(initialRecipes), recipe -> {
             Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
             intent.putExtra("id", recipe.getId());
             intent.putExtra("title", recipe.getTitle());
@@ -64,6 +69,10 @@ public class SearchFragment extends Fragment {
             startActivity(intent);
         });
         recyclerView.setAdapter(recipeAdapter);
+
+        if (savedSearchQuery != null) {
+            ingredientInput.setText(savedSearchQuery);
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.spoonacular.com/")
@@ -78,6 +87,31 @@ public class SearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Restore saved data if available
+        if (savedInstanceState != null) {
+            savedRecipes = savedInstanceState.getParcelableArrayList(KEY_RECIPES);
+            savedSearchQuery = savedInstanceState.getString(KEY_SEARCH_QUERY);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save current recipes and search query
+        if (recipeAdapter != null && recipeAdapter.getRecipes() != null) {
+            outState.putParcelableArrayList(KEY_RECIPES, new ArrayList<>(recipeAdapter.getRecipes()));
+        }
+
+        if (ingredientInput != null && ingredientInput.getText() != null) {
+            outState.putString(KEY_SEARCH_QUERY, ingredientInput.getText().toString());
+        }
     }
 
     private void fetchRecipes(String ingredients) {

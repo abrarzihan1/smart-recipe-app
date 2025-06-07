@@ -1,5 +1,6 @@
 package hu.unideb.inf.smartrecipe.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import hu.unideb.inf.smartrecipe.R;
+import hu.unideb.inf.smartrecipe.activities.RecipeDetailActivity;
 import hu.unideb.inf.smartrecipe.adapter.FavoriteRecipeAdapter;
 import hu.unideb.inf.smartrecipe.model.FavoriteRecipe;
 import hu.unideb.inf.smartrecipe.viewModel.FavoritesViewModel;
@@ -37,7 +39,20 @@ public class FavoritesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FavoriteRecipeAdapter(recipe -> viewModel.deleteFavorite(recipe));
+        // Updated adapter constructor with both click listeners
+        adapter = new FavoriteRecipeAdapter(
+                // Click listener for opening recipe details
+                recipe -> {
+                    Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+                    intent.putExtra("id", recipe.getId());
+                    intent.putExtra("title", recipe.getTitle());
+                    intent.putExtra("image", recipe.getImage());
+                    startActivity(intent);
+                },
+                // Delete listener for removing favorites
+                recipe -> viewModel.deleteFavorite(recipe)
+        );
+
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(FavoritesViewModel.class);

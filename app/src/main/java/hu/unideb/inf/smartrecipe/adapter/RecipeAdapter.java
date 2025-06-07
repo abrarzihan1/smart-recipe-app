@@ -34,6 +34,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         this.listener = listener;
     }
 
+    public List<Recipe> getRecipes() {
+        return recipeList;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
